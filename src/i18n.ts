@@ -1,0 +1,478 @@
+import { getLanguage } from "obsidian";
+
+export type Lang = "en" | "ko";
+export type LangSetting = "auto" | Lang;
+
+const en = {
+	// commands & ribbon
+	"cmd.create": "Search and add to your media diary",
+	"cmd.review": "Rate and review the current note",
+	"cmd.fill": "Fill current note's properties with media info",
+	"cmd.note": "Add a quote or memo to the current note",
+
+	// note body sections
+	"body.quotes": "Quotes",
+	"body.quotesMusic": "Lyrics & lines",
+	"body.memo": "Memo",
+
+	"review.quote": "Words to keep",
+	"review.quoteDesc.video": "A favorite line or quote. It goes into the Quotes section of the note.",
+	"review.quoteDesc.comic": "A favorite line or passage. It goes into the Quotes section of the note.",
+	"review.quoteDesc.music": "A lyric or line you want to keep. It goes into the Lyrics & lines section of the note.",
+	"review.quotePlaceholder.video": "\"I'm not a good person, but I want to be.\"",
+	"review.quotePlaceholder.comic": "A line that stayed with you",
+	"review.quotePlaceholder.music": "A lyric that stayed with you",
+	"review.source": "Source",
+	"review.sourcePlaceholder.video": "Who said it, episode, or timestamp",
+	"review.sourcePlaceholder.comic": "Character or chapter",
+	"review.sourcePlaceholder.music": "Track title",
+	"review.memo": "Memo",
+	"review.memoDesc": "Anything else: context, thoughts, who you watched it with. Saved under Memo with the date.",
+	"review.memoPlaceholder": "Free notes",
+	"review.noteTitle": "Add a quote or memo",
+	"review.saveHint": "Ctrl/Cmd + Enter to save",
+	"review.nothing": "Nothing to save.",
+
+	// media types
+	"type.movie": "Movie",
+	"type.series": "Series / TV",
+	"type.anime": "Anime",
+	"type.webtoon": "Webtoon",
+	"type.manga": "Manga / Comics",
+	"type.album": "Album",
+
+	// default subfolders
+	"sub.movie": "Movies",
+	"sub.series": "Series",
+	"sub.anime": "Anime",
+	"sub.webtoon": "Webtoons",
+	"sub.manga": "Manga",
+	"sub.album": "Albums",
+
+	// statuses
+	"status.video.want": "want to watch",
+	"status.video.doing": "watching",
+	"status.video.done": "watched",
+	"status.video.dropped": "dropped",
+	"status.comic.want": "want to read",
+	"status.comic.doing": "reading",
+	"status.comic.done": "read",
+	"status.comic.dropped": "dropped",
+	"status.music.want": "want to listen",
+	"status.music.done": "listened",
+
+	// album release types
+	"release.album": "Studio album",
+	"release.ep": "EP",
+	"release.single": "Single",
+	"release.ost": "OST",
+
+	// serial status (AniList)
+	"serial.FINISHED": "Completed",
+	"serial.RELEASING": "Ongoing",
+	"serial.NOT_YET_RELEASED": "Upcoming",
+	"serial.CANCELLED": "Cancelled",
+	"serial.HIATUS": "On hiatus",
+
+	// anime seasons
+	"season.WINTER": "Winter",
+	"season.SPRING": "Spring",
+	"season.SUMMER": "Summer",
+	"season.FALL": "Fall",
+
+	// search modal
+	"modal.title": "Add to Media Diary",
+	"modal.placeholder": "Title (Korean or English)",
+	"modal.search": "Search",
+	"modal.searching": "Searching {provider}…",
+	"modal.loading": "Loading details…",
+	"modal.none": "No results found.",
+	"modal.count": "{count} results — use ↑↓ and Enter",
+	"modal.failed": "Couldn't add it: {error}",
+	"modal.tracks": "{count} tracks",
+	"modal.episodes": "{count} episodes",
+
+	// review modal
+	"review.title": "Rate and review",
+	"review.status": "Status",
+	"review.rating": "Rating",
+	"review.ratingDesc": "Click or tap a star; the left half gives half a star. ← → adjust, 0 clears. Saved as stars (★★★★½) and as a number for sorting.",
+	"review.clear": "Clear rating",
+	"review.noRating": "No rating",
+	"review.oneLiner": "One-line review",
+	"review.oneLinerPlaceholder": "In one sentence, how was it?",
+	"review.date": "Date",
+	"review.addDate": "Add this date to the viewing log",
+	"review.addDateDesc": "Saved to watched_dates. Watch it again later and the dates stack up.",
+	"review.save": "Save",
+	"review.saved": "Saved your review of {name}.",
+
+	// folder picker
+	"folder.root": "/ (vault root)",
+	"folder.default": "(default)",
+	"folder.placeholder": "Choose a folder for the note",
+	"folder.move": "move",
+	"folder.choose": "save here",
+	"folder.cancel": "cancel",
+
+	// notices
+	"notice.exists": "Opening existing note: {name}",
+	"notice.created": "Added to your diary: {name}",
+	"notice.filled": "Filled {count} properties.",
+	"notice.nothingToFill": "No empty properties to fill.",
+	"notice.notFolder": "'{path}' is a file, not a folder.",
+	"notice.tmdbOk": "TMDB connected: received {count} results.",
+
+	// errors
+	"err.tmdbNoKey": "Movies and series need a TMDB API key. Add one in Media Diary settings.",
+	"err.tmdb401": "Invalid TMDB key (401). Paste the API key or the API Read Access Token. {detail}",
+	"err.tmdb": "TMDB error ({status}) {detail}",
+	"err.anilist429": "AniList rate limit reached. Wait a minute and try again.",
+	"err.anilist": "AniList error ({status}) {detail}",
+	"err.itunes": "Apple Music search error ({status}) {detail}",
+
+	// settings
+	"set.general": "General",
+	"set.language": "Interface language",
+	"set.languageDesc": "Language for Media Diary's menus, commands, windows, and default templates. Changes apply right away.",
+	"set.languageAuto": "Follow Obsidian ({lang})",
+	"set.contentLang": "Content language",
+	"set.contentLangDesc": "Which title and synopsis come first. Korean first also puts Korean works at the top when you search in Korean.",
+	"set.contentAuto": "Same as interface",
+	"set.contentKo": "Korean first",
+	"set.contentEn": "English first",
+	"set.search": "Search",
+	"set.maxResults": "Number of results",
+	"set.maxResultsDesc": "Results per search (TMDB returns up to 20).",
+	"set.musicStore": "Apple Music store",
+	"set.musicStoreDesc": "Two-letter country code for album search. KR shows Korean album titles; US suits English releases.",
+	"set.keys": "API keys",
+	"set.tmdbKey": "TMDB API key",
+	"set.tmdbKeyDesc": "Required for movies and series. Create a free account, then copy the API key or the API Read Access Token. Webtoons, manga, anime, and albums work without a key. ",
+	"set.tmdbKeyLink": "Open TMDB API settings",
+	"set.tmdbKeyPlaceholder": "API key or Read Access Token",
+	"set.testConnection": "Test connection",
+	"set.newNote": "New notes",
+	"set.folder": "Folder",
+	"set.folderDesc": "Base folder for diary notes. Type a new name to have it created. Leave empty for the vault root.",
+	"set.subfolders": "Separate folders by type",
+	"set.subfoldersDesc": "Save into a subfolder per type, such as Movies or Webtoons.",
+	"set.subfolderNames": "Subfolder names",
+	"set.askFolder": "Ask for a folder every time",
+	"set.askFolderDesc": "After you choose a title, Media Diary asks where to save it.",
+	"set.fileName": "File name format",
+	"set.fileNameDesc": "Template variables are allowed, e.g. {{title}} ({{year}}).",
+	"set.defaultStatus": "Status for new notes",
+	"set.defaultStatusDesc": "Most people add things they've already seen. Choose 'want to' to build a watchlist instead.",
+	"set.statusDone": "Already enjoyed (watched / read / listened)",
+	"set.statusWant": "Want to (watchlist)",
+	"set.openAfter": "Open note after creating it",
+	"set.reviewAfter": "Ask for a rating right after creating a note",
+	"set.reviewAfterDesc": "Opens the star rating and one-line review window.",
+	"set.templates": "Templates",
+	"set.templatesDesc": "Leave a template empty to use the default for the selected language. A line whose variables are all empty is left out, so one template fits movies, series, and anime.",
+	"set.templateVideo": "Movies, series, anime",
+	"set.templateComic": "Webtoons, manga",
+	"set.templateMusic": "Albums",
+	"set.currentNote": "Current note",
+	"set.overwrite": "Overwrite existing properties",
+	"set.overwriteDesc": "When off, 'Fill current note' only fills empty properties. Your rating, status, and review are never overwritten.",
+	"set.reset": "Reset to default",
+	"set.variables": "Template variables",
+	"set.variablesHelp":
+		"Write {{variable}}. Filters: {{variable:json}} quoted value or list, safe in frontmatter; {{variable:link}} [[wikilinks]]; {{variable:linkjson}} wikilink list for frontmatter.",
+	"set.credits": "Data sources",
+	"set.creditsTmdb": "This product uses the TMDB API but is not endorsed or certified by TMDB.",
+	"set.creditsOthers": "Webtoon, manga, and anime data come from AniList. Album data comes from the Apple iTunes Search API.",
+
+	// template variable descriptions
+	"var.type": "movie, series, anime, webtoon, manga, or album",
+	"var.typeLabel": "Type name in your language",
+	"var.title": "Title in your content language",
+	"var.titleKo": "Korean title",
+	"var.titleEn": "English title",
+	"var.titleOriginal": "Original title",
+	"var.aliases": "Other titles (list)",
+	"var.summary": "Original title · year · type · genres",
+	"var.year": "Year",
+	"var.date": "Release, first air, or start date",
+	"var.endDate": "End date (finished works)",
+	"var.countries": "Countries of origin",
+	"var.genres": "Genres",
+	"var.overview": "Synopsis",
+	"var.coverUrl": "Poster or cover image URL",
+	"var.link": "Page on the source site",
+	"var.externalRating": "Score from the source, e.g. TMDB 8.6",
+	"var.directors": "Directors or creators",
+	"var.cast": "Main cast",
+	"var.networks": "Broadcasters (series) or serial platforms (webtoons)",
+	"var.ott": "Streaming services in your region",
+	"var.ageRating": "Age rating",
+	"var.episodes": "Number of episodes",
+	"var.seasons": "Number of seasons",
+	"var.runtime": "Runtime in minutes",
+	"var.studios": "Animation studios",
+	"var.season": "Anime season, e.g. 2026 Spring",
+	"var.writers": "Story writers",
+	"var.illustrators": "Artists",
+	"var.serialStatus": "Ongoing, completed, …",
+	"var.chapters": "Number of chapters",
+	"var.volumes": "Number of volumes",
+	"var.artists": "Album artists",
+	"var.label": "Label",
+	"var.releaseType": "Studio album, EP, single, or OST",
+	"var.trackCount": "Number of tracks",
+	"var.tracklist": "Numbered track list",
+	"var.source": "tmdb, anilist, or itunes",
+	"var.sourceKey": "Source ID, e.g. tmdb:movie:496243",
+	"var.status": "Status for new notes",
+	"var.today": "Today's date (YYYY-MM-DD)",
+};
+
+export type Key = keyof typeof en;
+
+const ko: Record<Key, string> = {
+	"cmd.create": "검색해서 미디어 다이어리에 추가",
+	"cmd.review": "현재 노트에 별점·감상 남기기",
+	"cmd.fill": "현재 노트 프런트매터에 작품 정보 채우기",
+	"cmd.note": "현재 노트에 문구·메모 추가",
+
+	"body.quotes": "명대사·문구",
+	"body.quotesMusic": "가사·문구",
+	"body.memo": "메모",
+
+	"review.quote": "남기고 싶은 문구",
+	"review.quoteDesc.video": "명대사나 기억하고 싶은 문장. 노트의 '명대사·문구' 섹션에 들어갑니다.",
+	"review.quoteDesc.comic": "명대사나 기억하고 싶은 문장. 노트의 '명대사·문구' 섹션에 들어갑니다.",
+	"review.quoteDesc.music": "가사 한 구절이나 남기고 싶은 문장. 노트의 '가사·문구' 섹션에 들어갑니다.",
+	"review.quotePlaceholder.video": "\"나는 좋은 사람이 아니지만, 되고 싶어.\"",
+	"review.quotePlaceholder.comic": "마음에 남은 대사",
+	"review.quotePlaceholder.music": "마음에 남은 가사",
+	"review.source": "출처",
+	"review.sourcePlaceholder.video": "누가 한 말인지, 몇 화, 몇 분",
+	"review.sourcePlaceholder.comic": "인물 또는 몇 화",
+	"review.sourcePlaceholder.music": "곡 제목",
+	"review.memo": "메모",
+	"review.memoDesc": "그 밖에 남기고 싶은 것: 본 계기, 생각, 함께 본 사람. 날짜와 함께 '메모' 섹션에 저장합니다.",
+	"review.memoPlaceholder": "자유롭게 적어 보세요",
+	"review.noteTitle": "문구·메모 추가",
+	"review.saveHint": "Ctrl/Cmd + Enter로 저장",
+	"review.nothing": "저장할 내용이 없습니다.",
+
+	"type.movie": "영화",
+	"type.series": "드라마·시리즈",
+	"type.anime": "애니",
+	"type.webtoon": "웹툰",
+	"type.manga": "만화",
+	"type.album": "앨범",
+
+	"sub.movie": "영화",
+	"sub.series": "드라마",
+	"sub.anime": "애니",
+	"sub.webtoon": "웹툰",
+	"sub.manga": "만화",
+	"sub.album": "앨범",
+
+	"status.video.want": "보고싶음",
+	"status.video.doing": "보는중",
+	"status.video.done": "봤음",
+	"status.video.dropped": "중단",
+	"status.comic.want": "읽고싶음",
+	"status.comic.doing": "읽는중",
+	"status.comic.done": "읽음",
+	"status.comic.dropped": "중단",
+	"status.music.want": "듣고싶음",
+	"status.music.done": "들음",
+
+	"release.album": "정규",
+	"release.ep": "미니(EP)",
+	"release.single": "싱글",
+	"release.ost": "OST",
+
+	"serial.FINISHED": "완결",
+	"serial.RELEASING": "연재중",
+	"serial.NOT_YET_RELEASED": "연재 예정",
+	"serial.CANCELLED": "연재 중단",
+	"serial.HIATUS": "휴재",
+
+	"season.WINTER": "겨울",
+	"season.SPRING": "봄",
+	"season.SUMMER": "여름",
+	"season.FALL": "가을",
+
+	"modal.title": "미디어 다이어리에 추가",
+	"modal.placeholder": "제목 (한글 또는 영어)",
+	"modal.search": "검색",
+	"modal.searching": "{provider}에서 찾는 중…",
+	"modal.loading": "상세 정보를 불러오는 중…",
+	"modal.none": "검색 결과가 없습니다.",
+	"modal.count": "{count}건 — ↑↓로 고르고 Enter",
+	"modal.failed": "추가하지 못했습니다: {error}",
+	"modal.tracks": "{count}곡",
+	"modal.episodes": "{count}화",
+
+	"review.title": "별점·감상 기록",
+	"review.status": "상태",
+	"review.rating": "별점",
+	"review.ratingDesc": "별을 누르세요. 별의 왼쪽 절반을 누르면 반 개입니다. ← → 로 조절, 0은 지우기. 노트에는 별(★★★★½)과 정렬용 숫자로 함께 저장됩니다.",
+	"review.clear": "별점 지우기",
+	"review.noRating": "별점 없음",
+	"review.oneLiner": "한줄평",
+	"review.oneLinerPlaceholder": "한 문장으로 남겨 보세요",
+	"review.date": "날짜",
+	"review.addDate": "감상 날짜 기록에 추가",
+	"review.addDateDesc": "watched_dates에 저장합니다. 다시 볼 때마다 날짜가 쌓입니다.",
+	"review.save": "저장",
+	"review.saved": "{name} 감상을 저장했습니다.",
+
+	"folder.root": "/ (보관소 맨 위)",
+	"folder.default": "(기본)",
+	"folder.placeholder": "노트를 저장할 폴더를 고르세요",
+	"folder.move": "이동",
+	"folder.choose": "이 폴더에 저장",
+	"folder.cancel": "취소",
+
+	"notice.exists": "이미 있는 노트를 엽니다: {name}",
+	"notice.created": "다이어리에 추가했습니다: {name}",
+	"notice.filled": "속성 {count}개를 채웠습니다.",
+	"notice.nothingToFill": "새로 채울 속성이 없습니다.",
+	"notice.notFolder": "'{path}'는 폴더가 아니라 파일입니다.",
+	"notice.tmdbOk": "TMDB 연결 성공: {count}건을 받았습니다.",
+
+	"err.tmdbNoKey": "영화·드라마 검색에는 TMDB API 키가 필요합니다. 플러그인 설정에서 입력해 주세요.",
+	"err.tmdb401": "TMDB 키가 올바르지 않습니다 (401). API 키나 API 읽기 액세스 토큰을 넣어 주세요. {detail}",
+	"err.tmdb": "TMDB 오류 ({status}) {detail}",
+	"err.anilist429": "AniList 요청 한도에 걸렸습니다. 1분 뒤 다시 시도해 주세요.",
+	"err.anilist": "AniList 오류 ({status}) {detail}",
+	"err.itunes": "Apple Music 검색 오류 ({status}) {detail}",
+
+	"set.general": "일반",
+	"set.language": "화면 언어",
+	"set.languageDesc": "메뉴, 명령, 창, 기본 템플릿에 쓰는 언어입니다. 바꾸면 바로 적용됩니다.",
+	"set.languageAuto": "Obsidian 언어 따르기 ({lang})",
+	"set.contentLang": "콘텐츠 언어",
+	"set.contentLangDesc": "제목과 줄거리를 어느 언어로 먼저 보여줄지 정합니다. 한국어 우선이면 한글로 검색할 때 한국 작품이 맨 위에 나옵니다.",
+	"set.contentAuto": "화면 언어와 같게",
+	"set.contentKo": "한국어 우선",
+	"set.contentEn": "영어 우선",
+	"set.search": "검색",
+	"set.maxResults": "결과 개수",
+	"set.maxResultsDesc": "한 번에 가져올 결과 수 (TMDB는 최대 20건).",
+	"set.musicStore": "Apple Music 스토어",
+	"set.musicStoreDesc": "앨범 검색에 쓸 국가 코드입니다. KR이면 한글 앨범명이, US면 영어권 앨범 정보가 잘 나옵니다.",
+	"set.keys": "API 키",
+	"set.tmdbKey": "TMDB API 키",
+	"set.tmdbKeyDesc": "영화·드라마 검색에 필요합니다. TMDB에 무료로 가입한 뒤 API 키나 API 읽기 액세스 토큰을 복사해 넣으세요. 웹툰·만화·애니·앨범은 키 없이 됩니다. ",
+	"set.tmdbKeyLink": "TMDB API 설정 열기",
+	"set.tmdbKeyPlaceholder": "API 키 또는 읽기 액세스 토큰",
+	"set.testConnection": "연결 확인",
+	"set.newNote": "새 노트",
+	"set.folder": "저장 폴더",
+	"set.folderDesc": "다이어리 노트를 모을 기본 폴더입니다. 없는 폴더 이름을 쓰면 새로 만듭니다. 비우면 보관소 맨 위에 만듭니다.",
+	"set.subfolders": "유형별 하위 폴더로 나누기",
+	"set.subfoldersDesc": "영화, 웹툰처럼 유형마다 하위 폴더에 저장합니다.",
+	"set.subfolderNames": "하위 폴더 이름",
+	"set.askFolder": "노트 만들 때마다 폴더 고르기",
+	"set.askFolderDesc": "작품을 고른 뒤 저장할 폴더를 묻습니다.",
+	"set.fileName": "파일 이름 형식",
+	"set.fileNameDesc": "템플릿 변수를 쓸 수 있습니다. 예: {{title}} ({{year}})",
+	"set.defaultStatus": "새 노트의 상태",
+	"set.defaultStatusDesc": "보통은 이미 본 작품을 기록합니다. 보고 싶은 목록을 만들려면 '보고싶음'을 고르세요.",
+	"set.statusDone": "이미 감상함 (봤음·읽음·들음)",
+	"set.statusWant": "감상 예정 (보고싶음 목록)",
+	"set.openAfter": "만든 뒤 노트 열기",
+	"set.reviewAfter": "노트를 만들면 바로 별점 창 열기",
+	"set.reviewAfterDesc": "별점과 한줄평을 남기는 창을 바로 띄웁니다.",
+	"set.templates": "템플릿",
+	"set.templatesDesc": "비워 두면 선택한 언어의 기본 템플릿을 씁니다. 변수가 모두 빈 줄은 빠지므로, 템플릿 하나로 영화·드라마·애니를 함께 쓸 수 있습니다.",
+	"set.templateVideo": "영화·드라마·애니",
+	"set.templateComic": "웹툰·만화",
+	"set.templateMusic": "앨범",
+	"set.currentNote": "현재 노트",
+	"set.overwrite": "프런트매터 기존 값 덮어쓰기",
+	"set.overwriteDesc": "끄면 '작품 정보 채우기'가 비어 있는 속성만 채웁니다. 별점·상태·한줄평은 어느 경우에도 덮어쓰지 않습니다.",
+	"set.reset": "기본값으로 되돌리기",
+	"set.variables": "템플릿 변수",
+	"set.variablesHelp":
+		"{{변수}} 형태로 씁니다. 필터: {{변수:json}} 프런트매터에 안전한 따옴표 값/목록, {{변수:link}} [[위키링크]], {{변수:linkjson}} 프런트매터용 링크 목록.",
+	"set.credits": "데이터 출처",
+	"set.creditsTmdb": "이 플러그인은 TMDB API를 사용하지만 TMDB의 보증이나 인증을 받지 않았습니다.",
+	"set.creditsOthers": "웹툰·만화·애니 정보는 AniList, 앨범 정보는 Apple iTunes Search API에서 가져옵니다.",
+
+	"var.type": "movie, series, anime, webtoon, manga, album 중 하나",
+	"var.typeLabel": "유형 이름 (화면 언어)",
+	"var.title": "제목 (콘텐츠 언어 우선)",
+	"var.titleKo": "한글 제목",
+	"var.titleEn": "영문 제목",
+	"var.titleOriginal": "원제",
+	"var.aliases": "다른 제목 목록",
+	"var.summary": "원제 · 연도 · 유형 · 장르",
+	"var.year": "연도",
+	"var.date": "개봉일·첫 방송일·연재 시작일·발매일",
+	"var.endDate": "종영일·완결일 (끝난 작품만)",
+	"var.countries": "제작 국가",
+	"var.genres": "장르",
+	"var.overview": "줄거리·소개",
+	"var.coverUrl": "포스터·표지 이미지 주소",
+	"var.link": "출처 사이트의 작품 페이지",
+	"var.externalRating": "출처 평점 (예: TMDB 8.6)",
+	"var.directors": "감독 또는 크리에이터",
+	"var.cast": "주요 출연진",
+	"var.networks": "방송사 (드라마) 또는 연재 플랫폼 (웹툰)",
+	"var.ott": "볼 수 있는 OTT",
+	"var.ageRating": "시청 등급",
+	"var.episodes": "회차 수",
+	"var.seasons": "시즌 수",
+	"var.runtime": "상영 시간 (분)",
+	"var.studios": "애니 제작사",
+	"var.season": "애니 방영 분기 (예: 2026 봄)",
+	"var.writers": "글 작가",
+	"var.illustrators": "그림 작가",
+	"var.serialStatus": "연재중, 완결 등",
+	"var.chapters": "화수",
+	"var.volumes": "권수",
+	"var.artists": "아티스트",
+	"var.label": "레이블·기획사",
+	"var.releaseType": "정규, 미니(EP), 싱글, OST",
+	"var.trackCount": "수록곡 수",
+	"var.tracklist": "번호 붙은 수록곡 목록",
+	"var.source": "tmdb, anilist, itunes 중 하나",
+	"var.sourceKey": "출처 ID (예: tmdb:movie:496243)",
+	"var.status": "새 노트의 상태",
+	"var.today": "오늘 날짜 (YYYY-MM-DD)",
+};
+
+const dictionaries: Record<Lang, Record<Key, string>> = { en, ko };
+
+let current: Lang = "en";
+
+/** Obsidian's display language. */
+export function detectObsidianLanguage(): Lang {
+	return getLanguage().toLowerCase().startsWith("ko") ? "ko" : "en";
+}
+
+export function setLanguage(setting: LangSetting): void {
+	current = setting === "auto" ? detectObsidianLanguage() : setting;
+}
+
+export function getLang(): Lang {
+	return current;
+}
+
+export function t(key: Key, vars?: Record<string, string | number>): string {
+	let s = dictionaries[current][key] ?? en[key] ?? key;
+	if (vars) {
+		for (const [k, v] of Object.entries(vars)) s = s.split(`{${k}}`).join(String(v));
+	}
+	return s;
+}
+
+/** 두 언어의 문구를 모두 돌려준다 (저장된 값이 어느 언어든 알아보기 위해). */
+export function allLabels(key: Key): string[] {
+	return [en[key], ko[key]];
+}
+
+/** 변수 이름이 사전에 있는지 확인하고 번역한다 (없으면 원래 값). */
+export function tMaybe(key: string): string {
+	return key in en ? t(key as Key) : "";
+}

@@ -1,0 +1,23 @@
+# Changelog
+
+## 0.2.0
+
+- Rating window: new fields for words to keep (a favorite line, quote, or lyric, with its source) and a free memo. They go into the note's Quotes (Lyrics & lines for albums) and Memo sections, and stack up each time you add more.
+- New command: Add a quote or memo to the current note.
+- Ratings are also saved as stars (`stars: ★★★★½`) next to the numeric `my_rating`, and the window shows the stars as you choose.
+- Default templates gain Quotes and Memo sections. Older notes get the sections added at the end when needed.
+- Ctrl/Cmd + Enter saves the rating window.
+
+## 0.1.1
+
+- Interface language setting (English, Korean, or follow Obsidian) now applies right away, including command names and the ribbon icon. No restart needed.
+- The 'Follow Obsidian' option shows which language it currently means.
+
+## 0.1.0
+
+- First release: search movies and series (TMDB), anime, webtoons, and manga (AniList), and albums (Apple Music) and create diary notes.
+- Korean, English, and original titles saved together; Korean works listed first when searching in Korean.
+- Rating window: 5 stars in half steps, status, one-line review, viewing date log.
+- Editable templates for video, comics, and music; empty lines are left out.
+- Fill an existing note's properties without touching your rating or review.
+- Korean and English interface.
