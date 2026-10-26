@@ -65,7 +65,8 @@ function isKoreanResult(r: Json): boolean {
 /** 검색 결과 한 줄 → 기본 정보만 담은 MediaItem */
 export function mapTmdbResult(type: MediaType, r: Json, opts: SearchOptions): MediaItem {
 	const movie = type === "movie";
-	const item = emptyItem(type, "tmdb", String(r["id"] ?? ""));
+	const rawId = r["id"];
+	const item = emptyItem(type, "tmdb", typeof rawId === "number" || typeof rawId === "string" ? String(rawId) : "");
 	const title = str(movie ? r["title"] : r["name"]);
 	const original = str(movie ? r["original_title"] : r["original_name"]);
 	item.title = title || original;

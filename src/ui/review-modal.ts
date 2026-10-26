@@ -56,6 +56,7 @@ export class ReviewModal extends Modal {
 	private starsEl: HTMLElement | null = null;
 	private ratingText: HTMLElement | null = null;
 	private toggleSetter: ((v: boolean) => void) | null = null;
+	private quoteInput: HTMLTextAreaElement | null = null;
 
 	constructor(app: App, file: TFile, defaults: ReviewDefaults = {}) {
 		super(app);
@@ -97,13 +98,24 @@ export class ReviewModal extends Modal {
 			});
 		}
 
-		let quoteArea: TextAreaComponent | null = null;
-		this.textArea(contentEl, t("review.quote"), t(`review.quoteDesc.${this.group}` as Key), t(`review.quotePlaceholder.${this.group}` as Key), 3, (v) => (this.quote = v), (ta) => (quoteArea = ta));
+		const quoteArea = this.textArea(
+			contentEl,
+			t("review.quote"),
+			t(`review.quoteDesc.${this.group}` as Key),
+			t(`review.quotePlaceholder.${this.group}` as Key),
+			3,
+			(v) => {
+				this.quote = v;
+			},
+		);
+		this.quoteInput = quoteArea.inputEl;
 		new Setting(contentEl).setName(t("review.source")).addText((tx) => {
 			tx.setPlaceholder(t(`review.sourcePlaceholder.${this.group}` as Key)).onChange((v) => (this.source = v));
 			tx.inputEl.addClass("media-diary-oneliner");
 		});
-		this.textArea(contentEl, t("review.memo"), t("review.memoDesc"), t("review.memoPlaceholder"), 4, (v) => (this.memo = v));
+		this.textArea(contentEl, t("review.memo"), t("review.memoDesc"), t("review.memoPlaceholder"), 4, (v) => {
+			this.memo = v;
+		});
 
 		new Setting(contentEl).setName(t("review.date")).addText((tx) => {
 			tx.inputEl.type = "date";
@@ -115,7 +127,9 @@ export class ReviewModal extends Modal {
 				.setName(t("review.addDate"))
 				.setDesc(t("review.addDateDesc"))
 				.addToggle((tg) => {
-					this.toggleSetter = (v: boolean) => tg.setValue(v);
+					this.toggleSetter = (v: boolean) => {
+						tg.setValue(v);
+					};
 					this.addDate = this.status === "done";
 					tg.setValue(this.addDate).onChange((v) => (this.addDate = v));
 				});
@@ -133,7 +147,7 @@ export class ReviewModal extends Modal {
 
 		window.setTimeout(() => {
 			if (full) this.starsEl?.focus();
-			else (quoteArea as TextAreaComponent | null)?.inputEl.focus();
+			else this.quoteInput?.focus();
 		}, 0);
 	}
 
@@ -144,16 +158,14 @@ export class ReviewModal extends Modal {
 		placeholder: string,
 		rows: number,
 		onChange: (v: string) => void,
-		onCreate?: (ta: TextAreaComponent) => void,
-	): void {
+	): TextAreaComponent {
 		const s = new Setting(el).setName(name).setDesc(desc);
 		s.settingEl.addClass("media-diary-textarea-setting");
-		s.addTextArea((ta) => {
-			ta.setPlaceholder(placeholder).onChange(onChange);
-			ta.inputEl.rows = rows;
-			ta.inputEl.addClass("media-diary-textarea");
-			onCreate?.(ta);
-		});
+		const ta = new TextAreaComponent(s.controlEl);
+		ta.setPlaceholder(placeholder).onChange(onChange);
+		ta.inputEl.rows = rows;
+		ta.inputEl.addClass("media-diary-textarea");
+		return ta;
 	}
 
 	private renderStars(el: HTMLElement): void {

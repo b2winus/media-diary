@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.1
+
+- Code fixes from the Obsidian plugin review: no callbacks return values where none are expected, one unnecessary type assertion removed, and safer handling of TMDB IDs.
+- `npm run lint` runs the same checks as the community plugin review.
+
 ## 0.2.0
 
 - Rating window: new fields for words to keep (a favorite line, quote, or lyric, with its source) and a free memo. They go into the note's Quotes (Lyrics & lines for albums) and Memo sections, and stack up each time you add more.
