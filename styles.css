@@ -93,8 +93,14 @@
 	flex-wrap: wrap;
 }
 
+/* 별이 줄 왼쪽에 고정되도록: 오른쪽 정렬이면 옆 글자 길이에 따라 별이 밀린다. */
+.media-diary-rating-setting .setting-item-control {
+	justify-content: flex-start;
+}
+
 .media-diary-stars-wrap {
 	display: flex;
+	flex: none;
 	align-items: center;
 	gap: var(--size-4-2);
 }
@@ -130,8 +136,12 @@
 	color: transparent;
 }
 
+/* 너비를 고정해 값이 바뀌어도 옆의 요소가 움직이지 않게 한다. */
 .media-diary-rating-text {
-	min-width: 4.5em;
+	display: inline-block;
+	flex: none;
+	width: 6.5em;
+	white-space: nowrap;
 	color: var(--text-muted);
 	font-size: var(--font-ui-small);
 	font-variant-numeric: tabular-nums;

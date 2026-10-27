@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.3
+
+- Rating window: the stars no longer shift sideways while you move over them. The value beside them now reads "4.5 / 5" in a fixed-width space.
+
 ## 0.2.2
 
 - Fixed the out-of-date `package-lock.json` so `npm ci` and the build verification succeed.

@@ -216,7 +216,7 @@ export class ReviewModal extends Modal {
 			s.toggleClass("is-half", value === i + 0.5);
 		});
 		this.starsEl.setAttr("aria-valuenow", String(value));
-		this.ratingText.setText(value ? `${starString(value)}  ${value}` : t("review.noRating"));
+		this.ratingText.setText(value ? `${value} / 5` : t("review.noRating"));
 	}
 
 	private async save(): Promise<void> {
