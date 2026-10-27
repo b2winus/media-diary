@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.4
+
+- Fixed album search returning nothing. The default store was Korea, and the Korean iTunes store doesn't sell music, so every album search came back empty. Album search now uses the US store by default; existing settings move there automatically. Korean artists and songs are still found when you search in Korean.
+- Albums can now be found by song title and artist name as well as album title. Song matches show the song (♪) in the results and create a note for the album it's on.
+- The music store setting is now a list of stores that sell music: US, Japan, UK, Canada, Australia.
+- Album details fill in the label and release date from the album itself.
+
 ## 0.2.3
 
 - Rating window: the stars no longer shift sideways while you move over them. The value beside them now reads "4.5 / 5" in a fixed-width space.

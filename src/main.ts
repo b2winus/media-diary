@@ -6,6 +6,7 @@ import { FolderPickModal } from "./ui/folder-suggest";
 import { ContentLang, MediaItem, MediaType, SearchOptions, groupOf } from "./types";
 import { RenderExtras, defaultTemplate, frontmatterFields, isDefaultTemplate, makeFileName, renderTemplate } from "./template";
 import { asMediaType, defaultStatusLabel } from "./status";
+import { DEFAULT_MUSIC_STORE, MUSIC_STORES } from "./providers/itunes";
 import { Key, Lang, getLang, setLanguage, t } from "./i18n";
 
 /** 사용자가 직접 기록하는 값: '작품 정보 채우기'가 절대 덮어쓰지 않는다. */
@@ -217,6 +218,8 @@ export default class MediaDiaryPlugin extends Plugin {
 			if (isDefaultTemplate(this.settings.templates[g])) this.settings.templates[g] = "";
 		}
 		if (!asMediaType(this.settings.lastType)) this.settings.lastType = "movie";
+		// 이전 버전의 기본값 KR 스토어에는 음악이 없어 검색이 비었다. 음악을 파는 스토어로 옮긴다.
+		if (!(MUSIC_STORES as readonly string[]).includes(this.settings.musicStore)) this.settings.musicStore = DEFAULT_MUSIC_STORE;
 		setLanguage(this.settings.language);
 	}
 

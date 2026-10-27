@@ -66,6 +66,8 @@ export interface MediaItem {
 	releaseType: string;
 	trackCount: number | null;
 	tracks: string[];
+	/** 노래 제목으로 찾았을 때 그 노래 (검색 결과 표시용) */
+	matchedTrack: string;
 
 	/** 상세 정보를 이미 받아왔는지 (검색 결과만 있으면 false) */
 	detailed: boolean;
@@ -109,6 +111,7 @@ export function emptyItem(type: MediaType, source: ProviderId, sourceId: string)
 		releaseType: "",
 		trackCount: null,
 		tracks: [],
+		matchedTrack: "",
 		detailed: false,
 	};
 }

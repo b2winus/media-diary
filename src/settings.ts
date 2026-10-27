@@ -12,6 +12,7 @@ import {
 import type MediaDiaryPlugin from "./main";
 import { ContentLang, MEDIA_TYPES, MediaGroup, MediaType } from "./types";
 import { searchTmdb } from "./providers/tmdb";
+import { DEFAULT_MUSIC_STORE, MUSIC_STORES } from "./providers/itunes";
 import { FolderSuggest } from "./ui/folder-suggest";
 import { DEFAULT_FILENAME_TEMPLATE, TEMPLATE_VARIABLES, defaultTemplate } from "./template";
 import { Key, LangSetting, detectObsidianLanguage, getLang, t } from "./i18n";
@@ -41,7 +42,7 @@ export const DEFAULT_SETTINGS: MediaDiarySettings = {
 	language: "auto",
 	contentLang: "auto",
 	tmdbKey: "",
-	musicStore: "KR",
+	musicStore: DEFAULT_MUSIC_STORE,
 	maxResults: 20,
 	folder: "Media Diary",
 	useSubfolders: true,
@@ -93,7 +94,6 @@ export class MediaDiarySettingTab extends PluginSettingTab {
 			if (key === "folder" || key.startsWith("sub_")) v = v.trim().replace(/^\/+|\/+$/g, "");
 			else if (key === "fileNameTemplate") v = v.trim() ? v : DEFAULT_FILENAME_TEMPLATE;
 			else if (key === "tmdbKey") v = v.trim();
-			else if (key === "musicStore") v = v.trim().toUpperCase().slice(0, 2) || "KR";
 		}
 		if (key.startsWith("sub_")) {
 			const type = key.slice(4) as MediaType;
@@ -169,7 +169,11 @@ export class MediaDiarySettingTab extends PluginSettingTab {
 				{
 					name: t("set.musicStore"),
 					desc: t("set.musicStoreDesc"),
-					control: { type: "text", key: "musicStore", placeholder: "KR" },
+					control: {
+						type: "dropdown",
+						key: "musicStore",
+						options: Object.fromEntries(MUSIC_STORES.map((s) => [s, t(`store.${s}` as Key)])),
+					},
 				},
 			],
 		};

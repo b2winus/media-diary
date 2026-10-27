@@ -44,13 +44,14 @@ export class MediaSearchModal extends Modal {
 		dd.setValue(this.type);
 		dd.onChange((v) => {
 			this.type = v as MediaType;
+			this.input.setPlaceholder(this.placeholder());
 			this.cfg.onTypeChange?.(this.type);
 			if (this.input.getValue().trim()) void this.runSearch();
 			else this.input.inputEl.focus();
 		});
 
 		this.input = new TextComponent(bar);
-		this.input.setPlaceholder(t("modal.placeholder")).setValue(this.cfg.initialQuery);
+		this.input.setPlaceholder(this.placeholder()).setValue(this.cfg.initialQuery);
 		this.input.inputEl.addClass("media-diary-search-input");
 
 		new ButtonComponent(bar).setButtonText(t("modal.search")).setCta().onClick(() => void this.runSearch());
@@ -109,12 +110,17 @@ export class MediaSearchModal extends Modal {
 		}
 	}
 
+	private placeholder(): string {
+		return t(this.type === "album" ? "modal.placeholderMusic" : "modal.placeholder");
+	}
+
 	private metaLine(item: MediaItem): string {
 		const year = item.date.slice(0, 4);
 		if (item.type === "album") {
 			const kind = item.releaseType ? tMaybe(`release.${item.releaseType}`) : "";
 			const tracks = item.trackCount ? t("modal.tracks", { count: item.trackCount }) : "";
-			return [item.artists.join(", "), kind, year, tracks].filter(Boolean).join(" · ");
+			const song = item.matchedTrack ? t("modal.matchedTrack", { name: item.matchedTrack }) : "";
+			return [item.artists.join(", "), kind, year, tracks, song].filter(Boolean).join(" · ");
 		}
 		const people = [...item.writers, ...item.studios].slice(0, 2).join(", ");
 		const original = item.titleOriginal && item.titleOriginal !== item.title ? item.titleOriginal : "";

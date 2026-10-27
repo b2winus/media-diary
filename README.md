@@ -9,6 +9,7 @@ Media Diary is Korean-first: Korean titles, broadcasters, streaming services, an
 ## Features
 
 - **Six media types in one search window:** movies and series (TMDB), anime, webtoons, and manga (AniList), albums (Apple Music).
+- **Find albums by album title, song title, or artist**, in Korean or English. When a song matches, the result shows it (♪ Holssi) and the note is made for the album it's on.
 - **Three titles per work:** Korean, English, and original titles are all saved, and the extra ones go into `aliases` so any of them finds the note.
 - **Korean works first:** search in Korean and Korean titles rise to the top.
 - **Details that matter for K-content:** broadcaster (tvN, JTBC…), streaming services in Korea (Netflix, TVING…), Korean age rating, webtoon platform and serial status, album type (studio album, EP, single, OST).
@@ -63,7 +64,7 @@ watched_dates: ["2026-10-23"]
 
 - Movie and series data: [TMDB](https://www.themoviedb.org/). *This product uses the TMDB API but is not endorsed or certified by TMDB.*
 - Anime, webtoon, and manga data: [AniList](https://anilist.co/).
-- Album data: Apple iTunes Search API.
+- Album data: Apple iTunes Search API. Searches use the US store by default (Japan, UK, Canada, and Australia are also available in settings). The Korean store doesn't sell music, so it can't be used; Korean artists and songs are found in the other stores, though their titles often appear in English or romanized form.
 
 Media Diary only sends your search terms to these services. Your API key is stored in your vault's plugin settings.
 

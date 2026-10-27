@@ -1,6 +1,6 @@
 {
   "name": "media-diary",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "본 영화·드라마·웹툰·만화·애니·앨범을 모아 별점과 감상을 기록하는 Obsidian 플러그인",
   "main": "main.js",
   "scripts": {
