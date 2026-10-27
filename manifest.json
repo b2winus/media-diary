@@ -1,7 +1,7 @@
 {
   "id": "media-diary",
   "name": "Media Diary",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "minAppVersion": "1.8.7",
   "description": "Keep a diary of the movies, series, webtoons, manga, anime, and albums you've enjoyed. Search TMDB, AniList, and Apple Music, then rate with half stars and write a one-line review. Korean-first, with full English support.",
   "author": "Paul Hong",

@@ -1,9 +1,14 @@
 # Changelog
 
+## 0.2.2
+
+- Fixed the out-of-date `package-lock.json` so `npm ci` and the build verification succeed.
+- The lint tools moved to `tools/lint` with their own install, so the plugin build only installs what it needs.
+
 ## 0.2.1
 
 - Code fixes from the Obsidian plugin review: no callbacks return values where none are expected, one unnecessary type assertion removed, and safer handling of TMDB IDs.
-- `npm run lint` runs the same checks as the community plugin review.
+- Added lint checks matching the community plugin review.
 
 ## 0.2.0
 

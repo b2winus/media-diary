@@ -1,0 +1,17 @@
+{
+  "name": "media-diary-lint",
+  "private": true,
+  "description": "Runs the same ESLint rules as the Obsidian community plugin review. Kept separate so the plugin's own install stays small.",
+  "scripts": {
+    "lint": "cd ../.. && tools/lint/node_modules/.bin/eslint --config tools/lint/eslint.config.mjs src"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.30.1",
+    "@eslint/json": "0.14.0",
+    "eslint": "^9.30.1",
+    "eslint-plugin-obsidianmd": "0.4.2",
+    "obsidian": "1.14.4",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^8.35.1"
+  }
+}
